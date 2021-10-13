@@ -1,0 +1,216 @@
+COUNT(DISTINCT CASE WHEN ((vendor_nurtures.name IS NOT NULL)) THEN case when ( vendor_nurtures.action_id_a  >=21 and  vendor_nurtures.action_id_a  <=37)
+then  vendor_nurtures.user_id   end ELSE NULL END) AS "vendor_nurtures.Nurture_companies",
+    COUNT(DISTINCT CASE WHEN ((vendor_nurtures.name IS NULL)) THEN vendor_nurtures.user_id  ELSE NULL END) AS "vendor_nurtures.Vendors_without_Nurtures"
+
+
+if(
+	ISBLANK(
+		CALCULATE(
+			DISTICOUNT(Vendor Nurtures.name),
+			(if(Vendor Nurtures.action_id_a  >=21 and  Vendor Nurtures.action_id_a  <=37) then Vendor Nurture.user_id,BLANK()))))
+
+
+With Vs Without Nurtures = if(
+	//ISBLANK(
+		//CALCULATE(
+			(FILTER(ALL('Vendor Nurtures'[name]),
+			(if(FILTER(all('Vendor Nurtures'[action_id_a]  >=21 and  'Vendor Nurtures'.[action_id_a]  <=37) then 'Vendor Nurture'.[user_id],BLANK())))
+
+
+
+
+
+
+
+
+
+
+ COUNT(DISTINCT CASE WHEN ((vendor_nurtures.name IS NULL)) THEN vendor_nurtures.user_id  ELSE NULL END) AS "vendor_nurtures.Vendors_without_Nurtures"
+
+
+
+
+COUNT(DISTINCT CASE WHEN ((vendor_nurtures.campaign_id_d IS NULL)) THEN 
+	case when ( vendor_nurtures.role_id  =2 or  vendor_nurtures.role_id  =13) 
+		then  vendor_nurtures.user_id   end ELSE NULL END) AS "vendor_nurtures.Vendor_stats_2",
+    
+COUNT(DISTINCT CASE WHEN ((vendor_nurtures.campaign_id_d IS NOT NULL)) THEN 
+	case when ( vendor_nurtures.role_id  =2 or  vendor_nurtures.role_id  =13)
+	 then  vendor_nurtures.user_id   end ELSE NULL END) AS "vendor_nurtures.Vendor_stats_1"
+
+
+
+
+ ACTIVE?INACTIVE VENDORS==
+CALCULATE(DISTICOUNT(Vendor Nurtures.user_id), FILTER('Vendor Nurtures',Vendor Nurtures[role_id]=2 || Vendor Nurtures[role_id]=13 && ISBLANK(Vendor Nurtures[campaign_id_d]))
+
+CALCULATE(DISTINCOUNT(Vendor Nurtures.user_id), FILTER('Vendor Nurtures',Vendor Nurtures[role_id]=2 && Vendor Nurtures[role_id]=13 && NOT(ISBLANK(Vendor Nurtures[campaign_id_d])))
+
+
+
+
+WITH/WITHOUT NURTURES===
+
+COUNT(DISTINCT CASE WHEN ((vendor_nurtures.name IS NOT NULL)) THEN case when ( vendor_nurtures.action_id_a  >=21 and  vendor_nurtures.action_id_a  <=37) then  vendor_nurtures.user_id   end ELSE NULL END) AS "vendor_nurtures.Nurture_companies",
+   
+ COUNT(DISTINCT CASE WHEN ((vendor_nurtures.name IS NULL)) THEN vendor_nurtures.user_id  ELSE NULL END) AS "vendor_nurtures.Vendors_without_Nurtures"
+
+
+CALCULATE(DISTINCOUNT('Vendor Nurtures' [user_id]),FILTER(NOT(ISBLANK('Vendor Nurture'[name] && 'Vendor Nurture'[action_id_a >=21 && 'Vendor Nurture'[action_id_a<=37)))) With_Nurtures.
+
+
+CALCULATE(DISTINCOUNT('Vendor Nurtures' [user_id]),FILTER(ISBLANK('Vendor Nurture'[name])))
+
+
+
+
+
+
+
+
+COUNT(DISTINCT CASE WHEN ((vendor_nurtures.User_Company_Id IS NULL)) THEN vendor_nurtures.user_id  ELSE NULL END) AS "vendor_nurtures.Inactive_vendors_do",
+    COUNT(DISTINCT CASE WHEN ((vendor_nurtures.User_Company_Id IS NOT NULL)) THEN case when ( vendor_nurtures.role_id  =2 or  vendor_nurtures.role_id  =13) 
+and  vendor_nurtures.User_Company_Id   not in( 231,130,265,266,313,391,
+          280,281,303,307,311,357,
+          320,326,331,334,356,270,
+          368,370,369,372,376,380,
+          382,398,215,273,410,413,
+          415,374,389,322,332,333,
+          335,367,349,358,359,362,
+          371,378,379,381,385,386,
+          388,393,395,401,414,384,421,424)then  vendor_nurtures.user_id   end ELSE NULL END) AS "vendor_nurtures.Vendor_stats_do"
+
+
+CALCULATE(DISTINCOUNT('Vendor Nurtures'[user_id]),FILTER('Vendor Nurtures',ISBLANK('Vendor Nurtures'[user_company_id])) 
+
+Vendors_without Companies = 
+CALCULATE(DISTINCTCOUNT('Vendor Nurtures'[user_id]),FILTER('Vendor Nurtures',NOT(ISBLANK('Vendor Nurtures'[user_company_id]) 
+&& ('Vendor Nurtures'[role_id]=2 || 'Vendor Nurtures'[role_id]=13) &&  NOT(ISBLANK('Vendor Nurtures'[user_company_id])=231) &&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=130)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=265)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=266)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=313)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=391)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=280)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=281)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=303)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=307)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=311)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=357)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=320)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=326)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=331)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=334)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=356)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=270)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=368)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=370)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=369)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=372)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=376)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=380)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=382)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=398)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=215)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=273)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=410)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=413)&&
+ NOT(ISBLANK('Vendor Nurtures'[user_company_id])=415)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=374)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=389)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=322)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=332)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=333)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=335)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=367)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=367)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=349)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=358)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=359)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=362)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=371)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=378)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=379)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=378)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=381)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=385)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=386)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=388)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=393)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=395)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=401)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=414)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=384)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=421)&&
+NOT(ISBLANK('Vendor Nurtures'[user_company_id])=424))))
+
+
+
+
+
+COUNT(DISTINCT CASE WHEN ((partner_nurtures.totalPartner1 IS NOT NULL)) AND ((partner_nurtures.partner_company_id IS NOT NULL)) THEN 
+case when   partner_nurtures.partner_company_id   is not null then    partner_nurtures.partner_id   end ELSE NULL END) AS "partner_nurtures.partner_companies_d"
+
+CALCULATE(DISTINCOUNT('Partner Nurtures'[partner_id]),FILTER('Partner Nurtures'[Total Partner] && NOT(ISBLANK('Partner Nurtures'[company_id])) 
+&& NOT(ISBLANK('Partner Nurtures'[partner_company_id])))
+
+
+
+
+COUNT(DISTINCT CASE WHEN ((partner_nurtures.totalPartner1 IS NOT NULL)) AND ((partner_nurtures.partner_company_id IS NULL)) THEN case 
+when   partner_nurtures.partner_company_id   is  null then    partner_nurtures.partner_id   end ELSE NULL END) AS "partner_nurtures.partner_without_companies"
+
+
+CALCULATE(DISTINCOUNT('Partner Nurtures'[partner_id]),FILTER('Partner Nurtures'[Total Partner1] && ISBLANK('Partner Nurtures'[company_id]) 
+&& ISBLANK('Partner Nurtures'[partner_company_id]))
+
+
+=======================================================================================================
+1.
+
+ 2.COUNT(DISTINCT ( leads_deals."ID" )) AS "leads_deals.Leads"
+
+3.COUNT(DISTINCT (case when ( leads_deals."Is Deal"  )='true' then ( leads_deals."ID"  ) END)) AS "leads_deals.Deal"
+
+CALCULATE(DISTINCOUNT(ID),Filter(('leads and deals',[isdeal]='true')))
+
+
+COUNT(DISTINCT case when extract(year from ( leads_deals."Deal Created Time"  ))= extract(year from now())
+      then ( leads_deals."ID"  ) end) AS "leads_deals.Cur_Year_Leads",
+    COUNT(DISTINCT case when extract(year from ( leads_deals."Deal Created Time"  ))= extract(year from now())-1
+      then ( leads_deals."ID"  ) end) AS "leads_deals.Prev_Year_Leads",
+    coalesce(round((( COUNT(DISTINCT case when extract(year from (leads_deals."Deal Created Time"))= extract(year from now())
+      then (leads_deals."ID") end) )-( COUNT(DISTINCT case when extract(year from (leads_deals."Deal Created Time"))= extract(year from now())-1
+      then (leads_deals."ID") end) ))
+      /NULLIF(( COUNT(DISTINCT case when extract(year from (leads_deals."Deal Created Time"))= extract(year from now())-1
+      then (leads_deals."ID") end) ),0)::numeric,2),1)*100   AS "leads_deals.Previous_year_percentage_change_Leads"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

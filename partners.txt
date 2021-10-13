@@ -1,0 +1,150 @@
+with a as  (select distinct "Redistributed Cam".campaign_id as "Redistributed Campaign ID",
+      "Vendor Campaign".campaign_id as "Vendor Campaign ID",
+      "Vendor Campaign".campaign_name as "Vendor Campaign Name",
+      "Vendor Company".company_id as "Vendor Company ID",
+      "Vendor Company".company_name as "Vendor Company Name",
+      "Vendor Campaign".is_launched "Vendor Cam Is Launched",
+      "Vendor Campaign".launch_time "Vendor Cam Launch Time",
+      "Vendor Campaign".campaign_type "Vendor Campaign Type",
+      "Vendor Campaign".campaign_schedule_type "Vendor Cam Schedule Type",
+      "Vendor Campaign".created_time "Vendor Cam Created Time",
+      "Partner Company".company_id "Partner Company ID",
+      "Partner Company".company_name "Partner Company Name",
+      "Redistributed Cam".campaign_name as "Redistributed Campaign Name",
+      "Redistributed Cam".campaign_type as "Redistributed Campaign Type",
+      "Redistributed Cam".campaign_schedule_type as "Redistributed Cam Schedule Type",
+      "Redistributed Cam".created_time as "Redistributed Cam Created Time",
+      "Redistributed Cam".parent_campaign_id as "Parent Campaign ID",
+      "Redistributed Cam".is_launched "Redistributed Cam Is Launched",
+      "Redistributed Cam".launch_time "Redistributed Cam Launch Time",
+      --"Partner Received Campaigns".campaign_id as "Partner Received Campaign",
+      --"Partner Received Campaigns".user_id "Partner User ID",
+      --"Partner Received Campaigns".email_id "Partner Email ID",
+      --"Partner Received Campaigns".user_list_id "Partner User List ID",
+      --"Partner Received Campaigns".partner_first_name "Partner First Name",
+      --"Partner Received Campaigns".partner_last_name "Partner Last Name",
+      --"Partner Received Campaigns".partner_company_name "Partner Company Name1",
+      "Date".date "Date",
+      "Date".yearqtr "Year Qtr",
+      "Date".cal_month "Month",
+      "Date".month_name "Month Name",
+      "Date".cal_week "Week",
+      "Campaign Deal Reg".id as "Deal ID",
+      "Campaign Deal Reg".is_deal as "Is Deal",
+      "Campaign Deal Reg".created_time as "Deal Created Time",
+      "Campaign Deal Reg".first_name as "Deal First Name",
+      "Campaign Deal Reg".last_name as "Deal Last Name",
+      "Campaign Deal Reg".email "Deal Email ID",
+      "Campaign Deal Reg".phone as "Deal Phone Number",
+      "Campaign Deal Reg".opportunity_amount "Opportunity Amt"
+      from
+      xamplify_test.xa_campaign_d "Vendor Campaign"
+      INNER JOIN xamplify_test.xa_user_d "Vendor Users" ON ("Vendor Campaign".customer_id = "Vendor Users".user_id)
+      INNER JOIN (select distinct c.company_id,c.company_name from xamplify_test.xa_company_d c, xamplify_test.xa_user_d  u,xamplify_test.xa_user_role_d r
+                       where u.company_id=c.company_id
+                       and u.user_id=r.user_id
+                       and r.role_id in(2,13) and c.company_id not in(231,130,265,266,313,391,280,281,303,307,311,357,320,326,331,334,356,270,368,370,369,372,376,
+                       380,382,398,215,273,410,413,415,374,389,322,332,333,335,367,349,358,359,362,371,378,379,381,385,386,388,393,395,401,414,384,421,424))"Vendor Company" ON ("Vendor Users".company_id = "Vendor Company".company_id)
+      left JOIN xamplify_test.xa_campaign_d "Redistributed Cam" ON ("Vendor Campaign".campaign_id = "Redistributed Cam".parent_campaign_id)
+      left JOIN xamplify_test.xa_user_d "Partner Users" ON ("Redistributed Cam".customer_id = "Partner Users".user_id)
+      left JOIN xamplify_test.xa_company_d "Partner Company" ON ("Partner Users".company_id = "Partner Company".company_id)
+     -- left JOIN xamplify_test.xa_userlist_d "Partners" ON ("Vendor Campaign".campaign_id = "Partner Received Campaigns".campaign_id)
+      left join xamplify_test.xa_date_dim "Date" on (split_part("Redistributed Cam".launch_time::text , '-',1)||split_part("Redistributed Cam".launch_time::text , '-',2)||left(split_part("Redistributed Cam".launch_time::text , '-',3),2))::int
+      = "Date".date_key
+      left join xamplify_test.xa_campaign_deal_registration_d "Campaign Deal Reg" on "Redistributed Cam".campaign_id = "Campaign Deal Reg".campaign_id
+      ),
+      b as (select distinct "Redistributed Cam1".campaign_id as "Redistributed Campaign ID1",
+      "Email View".action_id "Action ID",
+      "Email View".id "View ID",
+      "Email View".time "View Time",
+      "Email View".user_id as "View User ID",
+      --"Email View".action_id "Action ID",
+      "Email View".country "View Country",
+      "Email View".state "View State",
+      "Email View".city as "View City",
+      "Email View".zip as "View Zip Code",
+      "Email View".longitude as "View Longitude",
+      "Email View".latitude as  "View Latitude",
+      "Contact Received Campaigns".user_id as "Contact User ID",
+      "Contact Received Campaigns".user_list_id as "Contact User List ID"
+      --"Contact Received Campaigns".contact_company as "Contact Company",
+      --"Contact Received Campaigns".email_id as "Contact Email ID",
+      --"Contact Received Campaigns".contact_first_name as "Contact First Name",
+      --"Contact Received Campaigns".contact_last_name as "Contact Last Name",
+      --"Contact Received Campaigns".contact_mobile_number as "Contact Mobile Number",
+      --"Contact Received Campaigns".contact_country as "Contact Country",
+      --"Contact Received Campaigns".contact_state as "Contact State",
+      --"Contact Received Campaigns".contact_city as "Contact City",
+      --"Contact Received Campaigns".contact_zip as "Contact Zip Code"
+      from
+      xamplify_test.xa_campaign_d "Vendor Campaign1"
+      left outer join
+      xamplify_test.xa_campaign_d "Redistributed Cam1"
+      on "Vendor Campaign1".campaign_id = "Redistributed Cam1".parent_campaign_id
+      join xamplify_test.xa_campaign_user_userlist_d "Contact Received Campaigns"
+      on "Redistributed Cam1".campaign_id = "Contact Received Campaigns".campaign_id
+      left JOIN  xamplify_test.xa_emaillog_d "Email View"
+      ON (("Redistributed Cam1".campaign_id = "Email View".campaign_id)
+      and "Email View".user_id = "Contact Received Campaigns".user_id)
+      where "Redistributed Cam1".is_nurture_campaign = true
+      ),
+       c as (select distinct cuul.user_id as "Contact User ID1",
+cuul.contact_company as "Contact Company",
+cuul.email_id as "Contact Email ID",
+cuul.contact_first_name as "Contact First Name",
+cuul.contact_last_name as "Contact Last Name",
+cuul.contact_mobile_number as "Contact Mobile Number",
+cuul.contact_country as "Contact Country",
+cuul.contact_state as "Contact State",
+cuul.contact_city as "Contact City",
+cuul.contact_zip as "Contact Zip Code",
+(case when sg.user_id=cuul.user_id then sg.bounce else false end) as "Bounce",
+sg.reason as "Bounce_Reason",
+(case when sg.user_id=cuul.user_id then sg.block else false end) as "Block",
+(case when sg.user_id=cuul.user_id then sg.spam else false end) as "Spam" ,
+ud.is_email_valid as "Is_Email_Valid",
+ud.email_category as "Email not Valid Reason",
+
+       ROW_NUMBER () OVER (PARTITION BY cuul.user_id order by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 desc nulls last) as row_number1
+from xamplify_test.xa_campaign_user_userlist_d cuul left join xamplify_test.xa_user_d ud
+    on(cuul.user_id=ud.user_id)
+  left join (select distinct sg.*,b.reason from xamplify_test.xa_sendgrid_d sg left join
+      xamplify_test.xa_bounce_d b on(b.email=sg.email)) sg on(sg.user_id=cuul.user_id)
+   )
+
+      select * from a left join b on a."Redistributed Campaign ID" = b."Redistributed Campaign ID1"
+      inner join c on b."Contact User ID" = c."Contact User ID1"
+     -- where a."Vendor Company ID" in (202,262,268,269,283,291,305,325,328,343,399,422,464)
+      and c.row_number1 = 1
+
+
+
+
+
+
+
+
+
+
+select distinct "Redistributed Cam".campaign_id as "Redistributed Campaign ID"
+from
+      xamplify_test.xa_campaign_d "Vendor Campaign"
+      INNER JOIN xamplify_test.xa_user_d "Vendor Users" ON ("Vendor Campaign".customer_id = "Vendor Users".user_id)
+      INNER JOIN (select distinct c.company_id,c.company_name from xamplify_test.xa_company_d c, xamplify_test.xa_user_d  u,xamplify_test.xa_user_role_d r
+                       where u.company_id=c.company_id
+                       and u.user_id=r.user_id
+                       and r.role_id in(2,13) and c.company_id not in(231,130,265,266,313,391,280,281,303,307,311,357,320,326,331,334,356,270,368,370,369,372,376,
+                       380,382,398,215,273,410,413,415,374,389,322,332,333,335,367,349,358,359,362,371,378,379,381,385,386,388,393,395,401,414,384,421,424))"Vendor Company" ON ("Vendor Users".company_id = "Vendor Company".company_id)
+      left JOIN xamplify_test.xa_campaign_d "Redistributed Cam" ON ("Vendor Campaign".campaign_id = "Redistributed Cam".parent_campaign_id)
+      left JOIN xamplify_test.xa_user_d "Partner Users" ON ("Redistributed Cam".customer_id = "Partner Users".user_id) limit 100
+
+
+
+
+
+
+
+
+
+
+

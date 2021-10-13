@@ -1,0 +1,102 @@
+
+1. Sort()
+#sorting using the sort() function
+sparkDF.sort("Segment","state").show()
+sparkDF.sort(col("Segment"),col("state")).show()
+
+
+#sorting using the sort() function
+sparkDF.sort("Category","Sales").show()
+sparkDF.sort(col("Category"),col("Sales")).show()
+
+#sorting using the sort() function
+sparkDF.sort("Region","Sales").show()
+sparkDF.sort(col("Region"),col("Sales")).show()
+
+2. OrderBy()
+
+#DataFrame sorting using orderBy() function
+sparkDF.orderBy("Region","Sales").show()
+sparkDF.orderBy(col("Region"),col("Sales")).show()
+
+#DataFrame sorting using orderBy() function
+sparkDF.orderBy("Category","Sales").show()
+sparkDF.orderBy(col("Category"),col("Sales")).show()
+
+3. Select()
+
+#SELECT()
+sparkDF.select('Category', 'State', 'Region').show(10)
+
+4.
+Fetch Columns:
+sparkDF.printSchema()
+
+5.
+#when()
+from pyspark.sql.functions import when
+sparkDF.select("Category", when(sparkDF.Sales >= "1000", "Sales greater 1000")).show()
+
+6.
+#Filter()
+from pyspark.sql.functions import filter
+sparkDF.filter(sparkDF.Category == "Furniture").show()
+
+#Filter()
+from pyspark.sql.functions import filter
+sparkDF.filter(sparkDF.Region == "South").show()
+
+7.
+#isNotNull()
+from pyspark.sql.functions import *
+#filter data by null values
+sparkDF.filter(sparkDF.Category.isNotNull()).show()
+
+8.
+#isNull()
+from pyspark.sql.functions import *
+#filter data by null values
+sparkDF.filter(sparkDF.Category.isNull()).show()
+
+
+
+9. Is In()
+#Filter Based on List Values
+#Filter IS IN List values
+li=["Ke","Fl","Ca"]
+sparkDF.filter(sparkDF.State.isin(li)).show()
+
+#isin()
+li=["South","Central"]
+sparkDF.filter(sparkDF.Region.isin(li)).show()
+
+#isin()
+from pyspark.sql.functions import *
+li=["Florida","Kentucky"]
+sparkDF.filter(sparkDF.State.isin(li)).show()
+
+10.
+#Window Functions -Ranking Functions
+from pyspark.sql.window import Window
+from pyspark.sql.functions import row_number
+windowSpec  = Window.partitionBy("Category").orderBy("Sales")
+
+sparkDF.withColumn("row_number",row_number().over(windowSpec)) \
+    .show(truncate=False)
+
+
+11.
+"""rank"""
+from pyspark.sql.functions import rank
+sparkDF.withColumn("rank",rank().over(windowSpec)) \
+    .show()
+
+12."""dens_rank"""
+from pyspark.sql.functions import dense_rank
+sparkDF.withColumn("dense_rank",dense_rank().over(windowSpec)) \
+    .show()
+
+
+
+
+
